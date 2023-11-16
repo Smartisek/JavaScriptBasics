@@ -99,7 +99,38 @@ function update(){
 }
 
 function draw(){
+    if(keyStates.ArrowLeft){
+        player.moveLeft();
+    }
+    if(keyStates.ArrowRight){
+        player.moveRight();
+    }
 
+    if(keyStates.Space){
+        player.fire();
+        keyStates.Space = false;
+    }
+
+    bullets.forEach((bullets, index) =>{
+        bullet.update();
+        if(bullet.y < 0){
+            bullets.splice(index,1);
+        }
+    });
+
+    let moveDownThisFrame = false;
+    if(allienmoveDown){
+        moveDownThisFrame = true;
+        allienmoveDown = false;
+    }
+
+    aliens.forEach((alien) =>{
+        if(moveDownThisFrame){
+            alien.y += 20;
+        } else {
+            alien.x += 2*allienDirection;
+        }
+    });
 }
 
 function gameLoop(){
