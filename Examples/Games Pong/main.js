@@ -17,4 +17,56 @@ let ballSpeedY = 2;
 let player1Y = height/2 - paddleHeight/2;
 let player2Y = height/2 - paddleHeight/2;
 
+let upPressed = false;
+let downPressed = false;
+let wPressed = false;
+let sPressed = false;
 
+function drawCircle(x, y, r, color){
+    context.fillStyle = color;
+    context.beginPath();
+    context.arc(x, y, r, 0, Math.PI*2, false); //2PI full circle
+    context.fill();
+}
+
+function drawText(text, x, y, color){
+    context.fillStyle = color;
+    context.font = "30px Arial";
+    context.fillText(text, x , y);
+}
+
+function update(){
+
+}
+
+document.addEventListener("keydown", (event) =>{
+    if(event.key === "ArrowUp"){
+        upPressed = true;
+    } else if(event.key === "ArrowDown"){
+        downPressed = true;
+    } else if( event.key === "W"){
+        wPressed = true;
+    } else if(event.key === "S"){
+        sPressed = true;
+    }
+});
+
+document.addEventListener("keyup", (event) =>{
+    if(event.key === "ArrowUp"){
+        upPressed = false;
+    } else if(event.key === "ArrowDown"){
+        downPressed = false;
+    } else if( event.key === "W"){
+        wPressed = false;
+    } else if(event.key === "S"){
+        sPressed = false;
+    }
+});
+
+
+function gameLoop(){
+    update();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
