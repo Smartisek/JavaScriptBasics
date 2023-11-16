@@ -34,6 +34,42 @@ function endGame(){
     resetGame();
 }
 
+document.addEventListener("keydown", event =>{
+keys[event.key]= true;
+    
+});
+
+document.addEventListener("keyup", event =>{
+    keys[event.key]= false;
+        
+    });
+
+    function handlePlayerMovement(){
+        if(keys.ArrowLeft && playerX > 0){
+            playerX -= 3;
+        }
+        if(keys.ArrowRight && playerX < gameWidth - playerWidth){
+            playerX += 3;
+        }
+        if(keys.ArrowUp && playerY > 0){
+            playerY -= 3;
+        }
+        if(keys.ArrowDown && playerY < gameHeight - playerHeight){
+            playerY += 3;
+        }
+    }
+
+    function moveEnemyTowardsPlayer(){
+        const enemySpeed = 1;
+        const dx = playerX - enemyX;
+        const dy = playerY - enemyY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if(distance > 0){
+            enemyX += dx / distance * enemySpeed;
+            enemyY += dy / distance * enemySpeed;
+        }
+    }
+
 function resetGame(){
  playerX =0;
  playerY = 75;
