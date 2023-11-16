@@ -99,8 +99,8 @@ drawRect(0, 0, width, height, "#eee");
 drawRect(0, player1Y, paddleWith, paddleHeight, "black");
 drawRect(width-paddleWith, player2Y, paddleWith, paddleHeight, "black");
 drawCircle(ballX, ballY, ballRadius, "black");
-drawText(player1Score, width/4, 50, "black");
-drawText(player2Score, 3*width/4, 50, "black");
+drawText(player1Score, width/4, 50, "purple");
+drawText(player2Score, 3*width/4, 50, "purple");
 }
 
 document.addEventListener("keydown", (event) =>{
