@@ -70,6 +70,28 @@ document.addEventListener("keyup", event =>{
         }
     }
 
+    function updatePlayerPosition(){
+        player.style.left = `${playerX}px`;
+        player.style.top = `${playerY}px`;
+    }
+
+    function updayeEnemyPosition(){
+        enemy.style.left = `${enemyX}px`;
+        enemy.style.top = `${enemyY}px`;
+    }
+
+    function checkCollisions(){
+        // put this math into utility script to be able to draw these "lines"
+        const collisionDistance = playerWidth/2 + enemy.offsetWidth/2;
+        const dx = playerX - enemyX;
+        const dy = playerY - enemyY;
+        const distance = Math.sqrt(dx*dx+dy*dy);
+        if(distance < collisionDistance){
+            player.style.opacity = 0;
+            gameOver = true;
+        }
+    }
+
 function resetGame(){
  playerX =0;
  playerY = 75;
