@@ -35,6 +35,37 @@ function drawText(text, x, y, color){
     context.fillText(text, x , y);
 }
 
+function reset(){
+    ballX = width/2;
+    ballY = height/2;
+    ballSpeedX = -ballSpeedX;
+    ballSpeedY = 5;
+}
+
+function collisionDetection(){
+    if(ballX - ballRadius< paddleWith && ballY > player1Y && player1Y+paddleHeight){
+        ballSpeedX = -ballSpeedX;
+        let deltaY = ballY - (player1Y + paddleHeight/2);
+        ballSpeedY = deltaY * 0.35;
+    }
+
+    if(ballX - ballRadius< paddleWith && ballY > player2Y && player2Y+paddleHeight){
+        ballSpeedX = -ballSpeedX;
+        let deltaY = ballY - (player2Y + paddleHeight/2);
+        ballSpeedY = deltaY * 0.35;
+    }
+    if(ballY - ballRadius < 0 || ballY + ballRadius > height){
+        ballSpeedY = -ballSpeedY;
+    }
+    if(ballX < 0){
+        player2Score++;
+        reset();
+    } else if (ballX > width){
+        player1Score++;
+        reset();
+    }
+}
+
 function update(){
 
 }
