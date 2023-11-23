@@ -17,4 +17,21 @@ class Physics extends Component{
         this.gameObject.y += this.velocity.y*deltaTime;
 
     }
+
+    isColliding(otherPhysics){
+        const[left, right, up, bottom] = this.getBoundingBox();
+        const[otherLeft, otherRight, otherTop, otherBottom] = otherPhysics.getBoundingBox();
+
+        return left<otherRight && right>otherLeft && top<otherBottom && buttom>otherTop; 
+    }
+
+    getBoundingBox(){
+        const render = this.gameObject.getComponent(Render);
+        const left = this.gameObject.x;
+        const right = this.gameObject.x+render.width;
+        const top = this.gameObject.y;
+        const bottom = this.gameObject.y + render.height;
+
+        return [left, right, top, bottom];
+    }
 }
