@@ -1,4 +1,4 @@
-// import camera frin "./camera.js"
+import camera from "./camera.js";
 class Game{
     constructor(canvasId){
         this.canvas = document.getElementById(canvasId);
@@ -8,7 +8,7 @@ class Game{
         this.deltaTime = 0;
         this.resizeCanvas();
         window.addEventListener("resize",() => this.resizeCanvas());
-        // this.camera = new Camera(null, this.canvas.width, this.canvas.height);
+        this.camera = new Camera(null, this.canvas.width, this.canvas.height);
     }
     resizeCanvas(){
         this.canvas.width = window.innerWidth;
@@ -23,7 +23,7 @@ class Game{
         this.lastFrameTime = currentFrameTime;
 
         this.update();
-        // this.camera.update();
+        this.camera.update();
         this.draw();
         requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
     }
