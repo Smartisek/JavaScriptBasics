@@ -172,7 +172,7 @@ class Player extends GameObject{
     resetGame(){
         this.lives = 3;
         this.score = 0;
-        this.resetPlayerState();
+        this.resetPlayerState();    // should be more in game state script 
     }
 }
 
