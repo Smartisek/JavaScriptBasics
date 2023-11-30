@@ -80,7 +80,76 @@ class Player extends GameObject{
             this.resetPlayerState();
         }
         if(this.lives <=0){
-            location.reload();
+            location.reload();              // lame just reloads, have to fix this 
         }
+        if(this.score >= 3){
+            console.log("you win");
+            location.reload();            // lame just reloads, have to fix this 
+        }
+
+        super.update(deltaTime);
+    }
+
+    handleGamepadInput(input){
+        const gamepad = input.getGamepad();
+        const physics = this.getComponent(Physics);
+        if(gamepad){
+            this.isGamepadMovement = false;
+            this.isGamepadJump = false;
+        }
+
+        const horizontalAxis = gamepad.axes[0];
+        if(horizontalAxis > 0.1){
+             this.isGamepadMovement = true;
+             physics.velocity.x = 100;
+             this.direction = -1;
+        }
+
+        if(horizontalAxis < 0.1){
+            this.isGamepadMovement = true;
+            physics.velocity.x = -100;
+            this.direction = 1;
+       }
+       else {
+        physics.velocity.x = 0; 
+       }
+
+       if(input.isGamepadButtonDown(0) && this.isOnPlatform){
+           this.isGamepadJump = true;
+           this.startJump();
+       }
+       
+    }
+
+    startJump(){
+        if(this.isOnPlatform){
+            this.isJumping = true;
+            this.jumpTimer = this.jumpTime;
+            this.getComponent(Physics).velocity.y = -this.jumpForce;
+            this.isOnPlatform = false;
+        }
+    }
+
+    updateJump(deltaTime){
+        this.jumpTimer -= deltaTime;
+        if(this.jumpTimer <=0 || this.getComponent(Physics).velocity.y >0){
+            this.isJumping = false;
+        }
+    }
+
+    collideWithEnemy(){
+        if(!this.isInvulnerable){
+            this.lives --;
+            this.isInvulnerable = true;
+            setTimeout(()=>{                  //timer for when collide with enemy, without lives would go down 60 times a second
+                this.isInvulnerable = false;
+            }, 2000);
+        }
+    }
+
+    collect(collectible){
+        this.score += collectible.value;
+        console.log(`score: ${this.score}`);           //lame, change this
+         this.emitCollectParticles(collectible);
     }
 }
