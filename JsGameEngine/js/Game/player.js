@@ -43,5 +43,44 @@ class Player extends GameObject{
         } else if(!this.isGamepadMovement){
             physics.velocity.x = 0;
         }
+        
+        if(!this.isGamepadJump && input.isKeyDown("ArrowUp") && this.isOnPlatform){
+            this.startJump();
+        }
+        if(this.isJumping){
+            this.updateJump(deltaTime);
+        }
+
+        const collectibles = this.game.gameObjects.filter((obj) => obj instanceof Collectible);
+        for(const collectible of collectibles){
+            if(physics.isColliding(collectible.getComponent(Physics))){
+                this.game.removeGameObject(collectible);
+            }
+        }
+
+        const enemies = this.game.gameObjects.filter((obj) => obj instanceof Enemy);
+        for(const enemy of enemies){
+            if(physics.isColliding(enemy.getComponent(Physics))){
+                this.collideWithEnemy();
+            }
+        }
+        this.isOnPlatform = false;
+        const platforms = this.game.gameObjects.filter((obj) => obj instanceof Platform);
+        for(const platform of platforms){
+            if(physics.isColliding(platform.getComponent(Physics))){
+                if(!this.isJumping){
+                    physics.velocity.y = 0;
+                    physics.acceleration.y = 0;
+                    this.y = platform.y - this.render.height;
+                    this.isOnPlatform = true;
+                }
+            }
+        }
+        if(this.y > this.game.canvas.height){
+            this.resetPlayerState();
+        }
+        if(this.lives <=0){
+            location.reload();
+        }
     }
 }
