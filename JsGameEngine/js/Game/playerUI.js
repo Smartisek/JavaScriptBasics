@@ -13,6 +13,7 @@ class PlayerUI extends GameObject{
         const player = this.game.GameObjects.find((obj) => obj instanceof Player);
 
         this.uiComponent.setText(`Lives ${player.lives} Score ${player.score}`);
+        super.update(deltaTime);
     }
 }
 
