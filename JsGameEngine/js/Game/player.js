@@ -152,4 +152,28 @@ class Player extends GameObject{
         console.log(`score: ${this.score}`);           //lame, change this
          this.emitCollectParticles(collectible);
     }
+
+    emitCollectParticles(){
+        const particleSystem = new ParticleSystem(this.x, this.y, "yellow", 20, 1, 0.5);
+        this.game.gameObjects.push(particleSystem);
+    }
+
+    resetPlayerState(){
+        this.x = this.game.canvas.width/2;
+        this.y = this.game.canvas.height/2;
+        this.getComponent(Physics).velocity = {x:0, y:0};
+        this.getComponent(Physics).acceleration = {x:0, y:0};
+        this.direction = 1;
+        this.isOnPlatform = false;
+        this.isJumping = false;
+        this.jumpTimer = 0;
+    }
+
+    resetGame(){
+        this.lives = 3;
+        this.score = 0;
+        this.resetPlayerState();
+    }
 }
+
+export default Player;
